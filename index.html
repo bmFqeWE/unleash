@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width = device-width, initial-scale = 1.0">
+    <title>Unleash</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <!--Section: Heading -->
+    <h1>Unleash your creativity!</h1>
+
+    <div class="main-menu">
+        <!--Section: SettingsCanvas-->
+        <div class="menu-items">
+            <div class="setting-canvas">
+                <h2>Canvas Settings</h2>
+                <button onclick="clearCanvas()">Clear Canvas</button> <br>
+                <button onclick="undoClear()">Restore Canvas</button> <br><br>
+
+                <br>
+                <h2>Design Type</h2>
+                <select name="designType" id="lbDesignType" onchange="changeDesignType(this.value)">
+                    <option value="blankCanvas" selected="selected">Blank Canvas</option>
+                    <option value="Namecard">Namecard</option>
+                    <option value="Signboard">Signboard</option>
+                    <option value="TShirtShortSleeve">Shirt - Short-sleeve</option>
+                    <option value="TShirtLongSleeve">Shirt - Long-sleeve</option>
+                </select>
+            </div>
+        </div> <!--end of menu-items-->
+
+        <!--Section: Object Panel-->
+        <div class="menu-items">
+
+            <h2>Object Panel</h2>
+            <div class="panel-object">
+                <div class="panel-object-shape">
+                    <button onclick="addRectangle(canvas)">
+                        <!-- Rectangle -->
+                        <img class="icon" src="/media/rectangle.png" alt="Rectangle Icon">
+                    </button> <br>
+
+                    <button onclick="addCircle(canvas)">
+                        <!-- Circle -->
+                        <img class="icon" src="/media/circle.png" alt="Circle Icon">
+                    </button> <br>
+
+                    <button onclick="addTriangle(canvas)">
+                        <!-- Triangle -->
+                        <img class="icon" src="/media/triangle.png" alt="Triangle Icon">
+                    </button> <br>
+                </div>
+
+                <div class="panel-object-settings">
+                    <button>Group Objects</button> <br>
+                    <button>Ungroup Objects</button> <br>
+                    <button onclick = "deleteObjects()">Delete Object</button><br>
+                    <input disabled type="color" id="shapeColor">
+                </div>
+            </div>
+        </div> <!--end  of menu-items-->
+
+        <!--Section: SettingBrush-->
+        <div class="menu-items">
+
+            <h2>Brush Panel</h2>
+            <div class="setting-brush">
+                <button onclick="draw(mode.draw)" id="btnBrush">Brush</button> <br>
+
+                <button onclick="draw(mode.eraser)" id="btnEraser">Eraser</button> <br>
+
+                <select disabled name="lbBrushType" id="lbBrushType" onchange="changeBrushType(this.value)"
+                    onclick="currBrush()">
+                    <option default value="Pencil Brush">Pencil Brush</option>
+                    <option value="Spray Brush">Spray Brush</option>
+                    <option value="Circle Brush">Circle Brush</option>
+                </select> <br>
+                <input type="color" id="brushColor" onchange="setBrushColor()"> <br>
+                <input type="range" id="brushWidth" min="5" max="50">
+            </div>
+        </div> <!--end  of menu-items-->
+
+        <!--Section:  SettingText-->
+        <div class="menu-items">
+
+            <h2>Text Settings</h2>
+
+            <button onclick="addTextbox(canvas)">Add Text</button>
+
+            <select disabled name="lbTextFont" id="lbTextFont" onchange="changeFontFamily(this.value)">
+                <option value="Arial">Arial</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Tahoma">Tahoma</option>
+                <option value="Trebuchet MS">Trebuchet MS</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Garamond">Garamond</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Brush Script MT">Brush Script MT</option>
+            </select>
+
+            <div class="panel-text-property">
+                <button disabled class="icon-inactive" onclick="changeFontWeight()" id="btnBold">
+                    <!-- Bold -->
+                    <img class="icon" src="/media/bold.png" alt="Bold Icon">
+                </button>
+                <button disabled class="icon-inactive" onclick="changeFontItalic()" id="btnItalic">
+                    <!-- Italic -->
+                    <img class="icon" src="/media/italic.png" alt="Italic Icon">
+                </button>
+                <button disabled class="icon-inactive" onclick="changeFontUnderline()" id="btnUnderline">
+                    <!-- Underline -->
+                    <img class="icon" src="/media/underline.png" alt="Underline Icon">
+                </button>
+            </div>
+
+            <input disabled type="color" id="textColor">
+        </div> <!--end  of menu-items-->
+
+
+        <!--Section: PanelUploadImage-->
+        <div class="menu-items">
+            <div class="panel-upload-image">
+                <h2>Upload Image</h2>
+                <input id="myImg" type="file" accept="image/*">
+
+                <br><br>
+                <h2>Save canvas as</h2>
+                <button onclick="savePNG()">png</button>
+                <button onclick="saveJPG()">jpg</button>
+                <button onclick="savePDF()">pdf</button>
+
+            </div>
+        </div> <!--end  of menu-items-->
+
+
+        
+        <!-- Section: Layer Controls
+        <div class ="menu-items">
+            <h2>Layers</h2>
+
+        </div> -->
+
+
+        <!-- Section: Floating layer list-->
+        <div class="menu-items floatLayerMenu" style = "width: 150px; z-index: 1000;">
+            <h2>Layer List</h2>
+
+            <div class = "layerList">
+                <ul id = "layerList" ></ul>
+            </div>
+        </div>
+
+
+    </div> <!--end main-menu-->
+
+
+    <!--Section: Canvas-->
+    <div class="canvasDiv">
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <!-- Image to be hid -->
+    <img src="media/TSS.png" alt="" style="display: none;" id="TShirtShortSleeve">
+    <img src="media/TLS.png" alt="" style="display: none;" id="TShirtLongSleeve">
+
+    <!-- Link: Fabric JS -->
+    <script src="fabric.min.js"></script>
+
+    <!--Link: index.js-->
+    <script src="index.js"></script>
+
+    <!-- Link: Save to PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script> 
+</body>
+
+</html>

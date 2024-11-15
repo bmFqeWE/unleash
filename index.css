@@ -1,0 +1,225 @@
+/* Section: Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
+
+/* Section: CSS Reset */
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+/* Section: Editable CSS */
+:root,  html, body, button, select{
+    font-family: "Josefin Sans", serif;
+}
+
+:root{
+    /* color variables */
+    --button: rgba(217, 217, 217, 100);
+    --buttonHover: rgba(200, 200, 200, 100);
+    --buttonActive: rgba(170, 170, 170, 100);
+    --panel: rgba(186, 186, 186, 100);
+    --bg: rgba(68, 68,68, 100);
+    --font: "Josefin Sans", serif;
+}
+
+body{
+   background-color: var(--bg); 
+}
+
+h1{
+    text-align: center;
+    margin: 15px 0 10px 0;
+    font-weight: 700;
+    font-size: 48px;
+    color: white;
+    text-transform: uppercase;
+}
+
+.main-menu{
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: center;
+    width: 90vw;
+    margin: auto;
+}
+
+.menu-items{
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+
+    background-color: var(--panel);
+    padding: 15px;
+    border-radius: 20px;
+    max-width: 160px;
+}
+
+h2{
+    margin: 0 5px 5px 5px;
+    text-align: center;
+    
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+button, input, select, input[type = file]::file-selector-button{
+    margin: 5px 0;
+    width: 100%;
+    
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+button, input[type = file]::file-selector-button{
+    background-color: var(--button);
+    border: none;
+    border-radius: 8px;
+    padding:  7px;
+}
+
+button:hover, select:hover, input[type = file]::file-selector-button:hover{
+    background-color: var(--buttonHover);
+    border-color: var(--buttonHover);
+}
+
+button:active, select:active, input[type = file]::file-selector-button:active{
+    background-color: var(--buttonActive);
+    border-color: var(--buttonActive);
+}
+
+select{
+    padding: 5px;
+    border-radius: 8px;
+    border-color: var(--button);
+    background-color: var(--button);
+}
+
+input[type = color]{
+    border: none;
+    border-radius: 8px;
+    height: 28px;
+}
+
+input[type = range]{
+    margin-top: 5px;
+}
+
+.panel-object{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.panel-object-shape, .panel-text-property{
+    display: flex;
+    justify-content: center;
+    column-gap: 8px;
+}
+
+.icon{
+    width: 13px;
+    height: auto;
+}
+
+.canvasDiv{
+    display: flex;
+    justify-content: center;
+    padding: 20px 0 0 0;
+}
+
+canvas{
+    border: 2px solid black;
+    border-radius:  8px;
+}
+
+.icon-inactive:disabled{
+    background-color: #D0D0D0;
+    color: #8C8C8C;
+}
+
+.icon-inactive:disabled img{
+    filter: opacity(20%);
+}
+
+.floatLayerMenu{
+    position: fixed;
+    right: 50px;
+    top: 300px;
+    max-height: 400px;
+    overflow: scroll;
+    overflow-x: clip;
+    min-width: 180px;
+}
+
+.layerList ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    column-gap: 5px;
+
+    button{
+        width: 30px;
+        margin-right:5px;
+    }
+}
+
+.selected-layer {
+    background-color: #ccc; /* Highlight selected layer */
+}
+
+li{
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 5px
+}
