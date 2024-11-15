@@ -902,7 +902,7 @@ function updateLayerList() {
         const visibilityImg = document.createElement('img');
 
         // Set the initial image based on visibility
-        visibilityImg.src = obj.visible ? '/media/close-eye.png' : '/media/witness.png'; 
+        visibilityImg.src = obj.visible ? './media/close-eye.png' : './media/witness.png'; 
 
         // Add the "icon" class for styling
         visibilityImg.classList.add('icon'); 
@@ -922,7 +922,7 @@ function updateLayerList() {
             obj.visible = !obj.visible; 
 
             // Update the image source and alt text based on visibility state
-            visibilityImg.src = obj.visible ? '/media/close-eye.png' : '/media/witness.png'; // Switch image
+            visibilityImg.src = obj.visible ? './media/close-eye.png' : './media/witness.png'; // Switch image
 
             // Update alt text
             visibilityImg.alt = obj.visible ? 'Hide Icon' : 'Show Icon'; 
@@ -944,7 +944,7 @@ function updateLayerList() {
         const removeImg = document.createElement('img');
 
         // Set the source of the trash icon
-        removeImg.src = '/media/trash.png'; 
+        removeImg.src = './media/trash.png'; 
         removeImg.classList.add('icon');
 
         // Set an alt text for accessibility
@@ -976,7 +976,7 @@ function updateLayerList() {
         const upImg = document.createElement('img');
 
         // Set the source of the up arrow icon
-        upImg.src = '/media/up-arrow.png'; 
+        upImg.src = './media/up-arrow.png'; 
 
         // Add the "icon" class for styling
         upImg.classList.add('icon'); 
@@ -1019,7 +1019,7 @@ function updateLayerList() {
         const downImg = document.createElement('img');
 
         // Set the source of the down arrow icon
-        downImg.src = '/media/down-arrow.png'; 
+        downImg.src = './media/down-arrow.png'; 
 
         // Add the "icon" class for styling
         downImg.classList.add('icon'); 
