@@ -6,7 +6,8 @@ const initCanvas = (id) =>{
     return new fabric.Canvas(id, {
         width: 1800,
         height: 580,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        selection: false,
     })
 }
 
@@ -511,18 +512,28 @@ let currentImage = null;
 let sbTemplate = null;
 let cardFront = null;
 let cardBack = null;
+let shortSleeve = null;
+let longSleeve = null;
 
 
 //      try to chnage this !!!!
 // Function: Switch design.
 function changeDesignType(designType) {
     // Remove the current image if it exists
-    if (currentImage) {
+    if (shortSleeve) {
         // Remove the existing image from the canvas
-        canvas.remove(currentImage); 
+        canvas.remove(shortSleeve); 
 
         // Reset the current image variable
-        currentImage = null; 
+        shortSleeve = null; 
+    }
+    
+    if (longSleeve) {
+        // Remove the existing image from the canvas
+        canvas.remove(longSleeve); 
+
+        // Reset the current image variable
+        longSleeve = null; 
     }
 
     //Remove signboard template if it exists
@@ -576,10 +587,50 @@ function changeDesignType(designType) {
         case 'TShirtShortSleeve':
             // Get the image element
             imageElement = document.getElementById('TShirtShortSleeve');
+
+            // Initiate Fabric instance
+            shortSleeve = new fabric.Image(imageElement, {
+                scaleX: 0.4,
+                scaleY: 0.4,     
+                lockMovementX: true,
+                lockMovementY: true,
+            });
+        
+            // Add the image to the canvas
+            canvas.add(shortSleeve);
+        
+            shortSleeve.id = 'templateTShirtShortSleeve'
+        
+            //Prevent manipulation of template images and centers it
+            preventManipulation(shortSleeve)
+        
+            // Refresh the canvas to show the new image
+            canvas.renderAll(); 
+            
             break;
 
         case 'TShirtLongSleeve':
             imageElement = document.getElementById('TShirtLongSleeve');
+
+            // Initiate Fabric instance
+            longSleeve = new fabric.Image(imageElement, {
+                scaleX: 0.4,
+                scaleY: 0.4,     
+                lockMovementX: true,
+                lockMovementY: true,
+            });
+        
+            // Add the image to the canvas
+            canvas.add(longSleeve);
+        
+            longSleeve.id = 'templateTShirtLongSleeve'
+        
+            //Prevent manipulation of template images and centers it
+            preventManipulation(longSleeve)
+        
+            // Refresh the canvas to show the new image
+            canvas.renderAll(); 
+
             break;
 
         // Exit if the design type is not recognized
@@ -587,27 +638,7 @@ function changeDesignType(designType) {
             console.log('Design type not recognized');
             return; 
     }
-
-    // Initiate Fabric instance
-    currentImage = new fabric.Image(imageElement, {
-        scaleX: 0.4,
-        scaleY: 0.4,     
-        lockMovementX: true,
-        lockMovementY: true,
-    });
-
-    // Add the image to the canvas
-    canvas.add(currentImage);
-
-    currentImage.id = 'templateCurrentImage'
-
-    //Prevent manipulation of template images and centers it
-    preventManipulation(currentImage)
-
-    // Refresh the canvas to show the new image
-    canvas.renderAll(); 
-
-    console.log('Changed design type to: ', designType, currentImage);
+    console.log('Changed design type to: ', designType);
 }
 
 // Function: Prevent object manipulation
@@ -679,7 +710,7 @@ function saveCanvasState() {
 }
 
 // Example excluded IDs
-const excludedIds = ['cardFront', 'cardBack', 'sbTemplate', 'currentImage'];
+const excludedIds = ['cardFront', 'cardBack', 'sbTemplate', 'TShirtShortSleeve', 'TShirtLongSleeve'];
 
 // Save the initial state
 saveCanvasState();
@@ -1109,3 +1140,67 @@ document.addEventListener('DOMContentLoaded', function () {
     const canvas = initCanvas('canvas'); // Initialize canvas
     updateLayerList(); // Populate layer list
 });
+
+
+
+
+
+const groupObjects = (canvas, group, shouldGroup) => {
+
+    const activeObjects = canvas.getActiveObjects()
+
+    console.log("Active Objects Before Grouping:", activeObjects);
+    activeObjects.forEach(obj => {
+        console.log(`Object ID: ${obj.id}, Left: ${obj.left}, Top: ${obj.top}`);
+    });
+
+
+    if(shouldGroup){
+        const objects = canvas.getObjects()
+        group.val = new fabric.Group(objects, {cornerColor: 'white'})
+        clearCanvas(canvas, svgState)
+        canvas.add(group.val)
+        canvas.requestRenderAll()
+    }else{
+        group.val.destroy()
+        let oldGroup = group.val.getObjects()
+        clearCanvas(canvas, svgState)
+        canvas.add(...oldGroup)
+        group.val = null
+        canvas.requestRenderAll()
+    }
+}
+// Initialize an object to store the group reference
+const group = {};
+const svgState = {}
+
+
+
+//Listener: Shift key.
+document.addEventListener("keydown", (e) => {
+    const selectedObject = e.target
+
+    // this code section should only work if the pressed key is shift key
+    if (e.shiftKey) {
+        canvas.selection = true
+
+        if (!e.repeat) {    
+            // if the shift key is only pressed once (not repeated)
+            console.log(`Key "${e.key}" pressed [event: keydown]`)
+            canvas.selection = false
+
+        } else {    
+            // if the shift key is pressed repeatedly
+            console.log(`Key "${e.key}" repeating [event: keydown]`);
+
+            if(selectedObject){
+                // console.log(`Selected object: ${selectedObject}`)
+
+                
+            }
+
+        }
+
+    }else{canvas.selection = false}
+
+})
