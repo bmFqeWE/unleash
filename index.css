@@ -83,10 +83,9 @@ h1{
 
 .main-menu{
     display: flex;
-    margin-bottom: 20px;
+    margin: 20px 0 20px 0;
     justify-content: center;
-    width: 90vw;
-    margin: auto;
+    width: 100vw;
 }
 
 .menu-items{
@@ -174,7 +173,6 @@ input[type = range]{
 .canvasDiv{
     display: flex;
     justify-content: center;
-    padding: 20px 0 0 0;
 }
 
 canvas{
@@ -199,6 +197,7 @@ canvas{
     overflow: scroll;
     overflow-x: clip;
     min-width: 180px;
+    border-radius: 20px 10px 10px 20px;
 }
 
 .layerList ul{
@@ -222,4 +221,16 @@ li{
     padding: 5px;
     border-radius: 5px;
     margin-bottom: 5px
+}
+
+::-webkit-scrollbar{
+    width: 10px;
+    background-color: grey;
+    border-radius: 0 20px 20px 0;
+}
+
+::-webkit-scrollbar-thumb{
+    width: 10px;
+    background-color: black;
+    border-radius: 0 20px 20px 0;
 }
