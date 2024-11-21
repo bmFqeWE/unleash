@@ -10,7 +10,7 @@
 
 <body>
     <!--Section: Heading -->
-    <h1>Unleash your creativity!</h1>
+    <!-- <h1>Unleash your creativity!</h1> -->
 
     <div class="main-menu">
         <!--Section: SettingsCanvas-->
@@ -55,8 +55,8 @@
                 </div>
 
                 <div class="panel-object-settings">
-                    <button>Group Objects</button> <br>
-                    <button>Ungroup Objects</button> <br>
+                    <button onclick="groupObjects(canvas, group, true)">Group Objects</button> <br>
+                    <button onclick="groupObjects(canvas, group, false)">Ungroup Objects</button> <br>
                     <button onclick = "deleteObjects()">Delete Object</button><br>
                     <input disabled type="color" id="shapeColor">
                 </div>
