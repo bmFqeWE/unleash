@@ -870,15 +870,19 @@ document.addEventListener('keydown', (e) => {
 
 //  !   Section: Highlight layer
 // Function to highlight the active layer
-function highlightActiveLayer(activeIndex) { 
-    const layerList = document.getElementById('layerList'); 
-    const layers = layerList.getElementsByTagName('li'); 
+function highlightActiveLayer(activeIndex) {
+    const layerList = document.getElementById('layerList');
+    const layers = layerList.getElementsByTagName('li');
 
-    // Remove highlight from all layers 
-    Array.from(layers).forEach((layer, index) => { 
-        // Highlight the active layer based on reverse index 
-        layer.style.backgroundColor = index === (layers.length - 1 - activeIndex) ? '#d3d3d3' : ''; 
-    }); 
+    // Remove highlight from all layers
+    Array.from(layers).forEach((layer, index) => {
+        layer.style.backgroundColor = ''; // Remove any previous highlight
+    });
+
+    // Highlight the active layer based on reverse index
+    if (activeIndex >= 0 && activeIndex < layers.length) {
+        layers[layers.length - 1 - activeIndex].style.backgroundColor = '#d3d3d3'; 
+    }
 }
 
 
@@ -1091,6 +1095,11 @@ function updateLayerList() {
 
         // Append the list item to the layer list
         layerList.appendChild(li); 
+
+                // Add an event listener to update the layer list when an object's stacking order is changed
+                obj.on('moved', () => {
+                    updateLayerList();
+                });
     }
 }
 
@@ -1146,21 +1155,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 const groupObjects = (canvas, group, shouldGroup) => {
-
-    const activeObjects = canvas.getActiveObjects()
-
-    console.log("Active Objects Before Grouping:", activeObjects);
-    activeObjects.forEach(obj => {
-        console.log(`Object ID: ${obj.id}, Left: ${obj.left}, Top: ${obj.top}`);
-    });
-
-
     if(shouldGroup){
         const objects = canvas.getObjects()
         group.val = new fabric.Group(objects, {cornerColor: 'white'})
         clearCanvas(canvas, svgState)
         canvas.add(group.val)
         canvas.requestRenderAll()
+        console.log('Selectable?', canvas.selectable)
     }else{
         group.val.destroy()
         let oldGroup = group.val.getObjects()
@@ -1178,27 +1179,18 @@ const svgState = {}
 
 //Listener: Shift key.
 document.addEventListener("keydown", (e) => {
-    const selectedObject = e.target
-
     // this code section should only work if the pressed key is shift key
     if (e.shiftKey) {
         canvas.selection = true
 
         if (!e.repeat) {    
-            // if the shift key is only pressed once (not repeated)
+            // if the shift key is only pressed once (not repeated), then multiple selection is disabled
             console.log(`Key "${e.key}" pressed [event: keydown]`)
             canvas.selection = false
 
         } else {    
-            // if the shift key is pressed repeatedly
+            // if the shift key is pressed repeatedly, then multiple selection is enabled
             console.log(`Key "${e.key}" repeating [event: keydown]`);
-
-            if(selectedObject){
-                // console.log(`Selected object: ${selectedObject}`)
-
-                
-            }
-
         }
 
     }else{canvas.selection = false}
